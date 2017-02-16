@@ -16,6 +16,5 @@ public class GameController : MonoBehaviour {
 			BoxCollider2D coll = go.GetComponent<BoxCollider2D> ();
 			coll.enabled = !(player.velocity.y > .3);			
 		}
-
 	}
 }

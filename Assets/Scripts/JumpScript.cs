@@ -5,14 +5,14 @@ public class JumpScript : MonoBehaviour {
 
 	public GameObject player;
 	public float force;
-
+	private PlayerScript ps;
 	private GameObject currentRestBar;
 	private Rigidbody2D rb;
 
 
 	void Start(){
 		rb = GetComponent<Rigidbody2D> ();
-//		ps = GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerScript> ();
+		ps = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerScript> ();
 	}
 	
 	// Update is called once per frame
@@ -27,7 +27,7 @@ public class JumpScript : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D  other) {
 		Debug.Log ("collided with something : " + other.gameObject.tag);
-//		ps.SetCurrentRestBar (other.gameObject);
+		ps.SetCurrentPlatform (other.gameObject);
 	}
 
 
