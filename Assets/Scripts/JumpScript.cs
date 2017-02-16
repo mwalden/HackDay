@@ -26,7 +26,6 @@ public class JumpScript : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D  other) {
-		Debug.Log ("collided with something : " + other.gameObject.tag);
 		ps.SetCurrentPlatform (other.gameObject);
 	}
 
