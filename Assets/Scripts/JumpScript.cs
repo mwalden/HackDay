@@ -20,11 +20,8 @@ public class JumpScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log ("jump script");
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			//prevent double jump
-			Debug.Log ("in key down : " + rb.velocity.y );
-			Debug.Log(rb.velocity.y );
 			if (rb.velocity.y <= 0.1) {
 				rb.AddForce (new Vector2 (0, force));
 			}

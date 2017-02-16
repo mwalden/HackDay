@@ -7,14 +7,17 @@ public class GameController : MonoBehaviour {
 	private CameraScript cameraScript;
 	private Camera cam;
 	private PlayerScript playerScript;
+	private AudioScript audioScript;
 
 	public float distanceToMove;
 	public float speed;
-
-
+	public int laneId;
 
 	void Start () {
 		GameObject g = GameObject.FindGameObjectWithTag ("Player");
+		GameObject audioGameObject = GameObject.FindGameObjectWithTag ("audio");
+		audioScript = audioGameObject.GetComponent<AudioScript> ();
+		audioScript.setCurrentLane(laneId);
 		player = g.GetComponent<Rigidbody2D> ();
 		playerScript = g.GetComponent<PlayerScript> ();
 		platforms = GameObject.FindGameObjectsWithTag ("platform");
@@ -37,6 +40,8 @@ public class GameController : MonoBehaviour {
 		playerScript.setKinematic (true);
 		playerScript.moveToPosition (playerDestination);
 		cameraScript.moveCameraToPosition (cameraDestination);
+		laneId -= 1;
+		audioScript.setCurrentLane (laneId);
 	}
 
 
@@ -46,5 +51,7 @@ public class GameController : MonoBehaviour {
 		playerScript.setKinematic (true);
 		playerScript.moveToPosition (playerDestination);
 		cameraScript.moveCameraToPosition (cameraDestination);
+		laneId += 1;
+		audioScript.setCurrentLane (laneId);
 	}
 }
