@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraScript : MonoBehaviour {
 
 	private Vector3 positionMovingTo;
-	private bool moving;
+	public bool moving;
 	public float speed;
 
 	// Use this for initialization
@@ -17,6 +17,7 @@ public class CameraScript : MonoBehaviour {
 		if (moving) {
 			float step = speed * Time.deltaTime;
 			transform.position =  Vector3.MoveTowards(transform.position, positionMovingTo,step);
+			moving = transform.position != positionMovingTo;
 		}
 	}
 
