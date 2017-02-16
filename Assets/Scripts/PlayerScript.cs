@@ -6,13 +6,15 @@ public class PlayerScript : MonoBehaviour {
 	private GameObject currentPlatform;
 	private Rigidbody2D playerRigidbody;
 	private CameraScript cameraScript;
-
+	private ScoreScript scoreScript;
 	private Vector3 positionMovingTo;
 	private bool moving;
+
 
 	void Start(){
 		playerRigidbody = GetComponent<Rigidbody2D> ();
 		cameraScript = Camera.main.GetComponent<CameraScript>();
+		scoreScript = GameObject.FindGameObjectWithTag ("score").GetComponent<ScoreScript> ();
 	}
 
 	public void resetPlayerPosition(){
@@ -20,6 +22,7 @@ public class PlayerScript : MonoBehaviour {
 		Vector3 newV = new Vector3 (v.x, v.y + .25f, v.z);
 		transform.position = newV;
 		playerRigidbody.velocity = new Vector2(0.0f,0.0f);
+		scoreScript.setScore (-100);
 	}
 
 	public void SetCurrentPlatform(GameObject platform){
@@ -27,6 +30,7 @@ public class PlayerScript : MonoBehaviour {
 			Debug.Log ("setting platform");
 			currentPlatform = platform;
 			cameraScript.moveCameraToPosition (new Vector3(platform.transform.position.x,platform.transform.position.y,-10f));
+			scoreScript.setScore (100);
 		}
 	}
 
