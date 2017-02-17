@@ -15,7 +15,7 @@ public class AudioScript : MonoBehaviour {
 		for (int x = 0; x < totalLanes; x++) {
 			AudioSource audioSource = gameObject.AddComponent<AudioSource> ();
 			audioSources.Add (audioSource);
-			string path = rootAudioDirectory + "/" + (x + 1);
+			string path = rootAudioDirectory + "/S/" + (x + 1);
 			AudioClip clip = Resources.Load<AudioClip> (path);
 			audioSource.clip = clip;
 			audioSource.volume = 0;
@@ -30,6 +30,10 @@ public class AudioScript : MonoBehaviour {
 		for (int x = 0; x < totalLanes; x++) {
 			if (lockedAudioTracks [x]) {
 				lockedAudioTracksDuration [x] -= deltaTime;
+				if (lockedAudioTracksDuration [x] <= 0) {
+					lockedAudioTracksDuration [x] = 0;
+					lockedAudioTracks [x] = false;
+				}
 			}
 					
 				
@@ -45,6 +49,7 @@ public class AudioScript : MonoBehaviour {
 	}
 
 	public void lockDownLane(int lane){
+		Debug.Log ("LANE LOCKED DOWN!");
 		lockedAudioTracks[lane] = true;
 		lockedAudioTracksDuration [lane] = lockDownDuration;
 	}

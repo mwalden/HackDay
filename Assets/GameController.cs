@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour {
 	private PlayerScript playerScript;
 	private AudioScript audioScript;
 
+	public int lockDownTotal;
+	public int platformsPassed;
 	public int totalLanes;
 	public float distanceToMove;
 	public float speed;
@@ -39,7 +41,7 @@ public class GameController : MonoBehaviour {
 			return;
 		Vector3 cameraDestination = new Vector3 (cam.transform.position.x - distanceToMove, cam.transform.position.y, cam.transform.position.z);
 		Vector3 playerDestination = new Vector3 (player.transform.position.x - distanceToMove, player.transform.position.y, player.transform.position.z);
-
+		platformsPassed = 0;
 		playerScript.setKinematic (true);
 		playerScript.moveToPosition (playerDestination);
 		cameraScript.moveCameraToPosition (cameraDestination);
@@ -51,6 +53,7 @@ public class GameController : MonoBehaviour {
 	public void onRightClick(){
 		if (laneId == totalLanes -1)
 			return;
+		platformsPassed = 0;
 		Vector3 cameraDestination = new Vector3 (cam.transform.position.x + distanceToMove, cam.transform.position.y, cam.transform.position.z);
 		Vector3 playerDestination = new Vector3 (player.transform.position.x + distanceToMove, player.transform.position.y, player.transform.position.z);
 		playerScript.setKinematic (true);
@@ -58,5 +61,13 @@ public class GameController : MonoBehaviour {
 		cameraScript.moveCameraToPosition (cameraDestination);
 		laneId += 1;
 		audioScript.setCurrentLane (laneId);
+	}
+
+	public void addPlatformPassed(int value){
+		platformsPassed += value;
+		if (platformsPassed == lockDownTotal) {
+			audioScript.lockDownLane (laneId);
+			platformsPassed = 0;
+		}
 	}
 }

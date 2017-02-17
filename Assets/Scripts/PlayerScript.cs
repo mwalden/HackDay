@@ -3,9 +3,10 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
 
-	private GameObject currentPlatform;
+	public GameObject currentPlatform;
 	private Rigidbody2D playerRigidbody;
 	private CameraScript cameraScript;
+	private GameController gameController;
 	private ScoreScript scoreScript;
 	private Vector3 positionMovingTo;
 	private bool moving;
@@ -14,6 +15,7 @@ public class PlayerScript : MonoBehaviour {
 	void Start(){
 		playerRigidbody = GetComponent<Rigidbody2D> ();
 		cameraScript = Camera.main.GetComponent<CameraScript>();
+		gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController>();
 		scoreScript = GameObject.FindGameObjectWithTag ("score").GetComponent<ScoreScript> ();
 	}
 
@@ -27,10 +29,14 @@ public class PlayerScript : MonoBehaviour {
 
 	public void SetCurrentPlatform(GameObject platform){
 		if (currentPlatform != platform) {
+			if (currentPlatform != null) {
+				scoreScript.setScore (100);
+				gameController.addPlatformPassed (1);
+			}
 			Debug.Log ("setting platform");
 			currentPlatform = platform;
 			cameraScript.moveCameraToPosition (new Vector3(platform.transform.position.x,platform.transform.position.y,-10f));
-			scoreScript.setScore (100);
+
 		}
 	}
 
