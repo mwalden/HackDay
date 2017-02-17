@@ -54,6 +54,10 @@ public class GameController : MonoBehaviour {
 	
 	}
 
+	public void playError(){
+		audioScript.playError ();
+	}
+
 	public void onLeftClick(){
 		if (laneId == 0)
 			return;

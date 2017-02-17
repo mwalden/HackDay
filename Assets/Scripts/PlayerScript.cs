@@ -26,12 +26,14 @@ public class PlayerScript : MonoBehaviour {
 		transform.position = newV;
 		playerRigidbody.velocity = new Vector2(0.0f,0.0f);
 		scoreScript.setScore (-100);
+		gameController.playError ();
 	}
 
 	public void SetCurrentPlatform(GameObject platform){
 		if (currentPlatform != platform) {
 			if (justMoved) {
 				justMoved = false;
+				currentPlatform = platform;
 				return;
 			}
 				
