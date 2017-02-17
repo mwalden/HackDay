@@ -10,8 +10,8 @@ public class AudioScript : MonoBehaviour {
 	public int totalLanes;
 	public int currentLane;
 	public float lockDownDuration;
-	
-	void Start () {
+
+	void Awake(){
 		for (int x = 0; x < totalLanes; x++) {
 			AudioSource audioSource = gameObject.AddComponent<AudioSource> ();
 			audioSources.Add (audioSource);
@@ -24,7 +24,7 @@ public class AudioScript : MonoBehaviour {
 			lockedAudioTracksDuration [x] = 0.0f;
 		}
 	}
-
+	
 	void Update(){
 		float deltaTime = Time.deltaTime;
 		for (int x = 0; x < totalLanes; x++) {
