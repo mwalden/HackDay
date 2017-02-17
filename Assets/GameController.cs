@@ -9,12 +9,17 @@ public class GameController : MonoBehaviour {
 	private PlayerScript playerScript;
 	private AudioScript audioScript;
 
+	public ParticleSystem particleSystem;
 	public int lockDownTotal;
 	public int platformsPassed;
 	public int totalLanes;
 	public float distanceToMove;
 	public float speed;
 	public int laneId;
+	private bool particleMoving;
+	public float particleSpeed;
+
+	public Bounds bounds;
 
 	void Start () {
 		GameObject g = GameObject.FindGameObjectWithTag ("Player");
@@ -26,12 +31,25 @@ public class GameController : MonoBehaviour {
 		platforms = GameObject.FindGameObjectsWithTag ("platform");
 		cam = Camera.main;
 		cameraScript = cam.GetComponent<CameraScript>();
+		particleSystem.Stop (true);
 	}
 	
 	void Update () {
+		
 		foreach (GameObject go in platforms){
 			BoxCollider2D coll = go.GetComponent<BoxCollider2D> ();
 			coll.enabled = !(player.velocity.y > .3);			
+		}
+		if (particleMoving) {
+			bounds = CameraExtensions.OrthographicBounds (cam);
+			if (particleSystem.transform.position.y < bounds.center.y + bounds.extents.y){
+				particleSystem.transform.position = new Vector3 (particleSystem.transform.position.x, particleSystem.transform.position.y + particleSpeed, particleSystem.transform.position.z);
+			}else{
+				particleMoving = false;
+				particleSystem.Stop();
+			}
+			
+
 		}
 	
 	}
@@ -65,9 +83,14 @@ public class GameController : MonoBehaviour {
 
 	public void addPlatformPassed(int value){
 		platformsPassed += value;
+
 		if (platformsPassed == lockDownTotal) {
 			audioScript.lockDownLane (laneId);
 			platformsPassed = 0;
+			particleMoving = true;
+			particleSystem.transform.position = new Vector3 (cam.transform.position.x, cam.transform.position.y-2.5f, cam.transform.position.z);
+			particleSystem.Play ();
+
 		}
 	}
 }

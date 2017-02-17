@@ -29,21 +29,23 @@ public class AudioScript : MonoBehaviour {
 		float deltaTime = Time.deltaTime;
 		for (int x = 0; x < totalLanes; x++) {
 			if (lockedAudioTracks [x]) {
+				Debug.Log ("Locked audio : " +lockedAudioTracksDuration [x]);
 				lockedAudioTracksDuration [x] -= deltaTime;
 				if (lockedAudioTracksDuration [x] <= 0) {
 					lockedAudioTracksDuration [x] = 0;
 					lockedAudioTracks [x] = false;
+					if (currentLane != x)
+						audioSources [x].volume = 0;
 				}
 			}
-					
-				
 		}
 	}
 
 	public void setCurrentLane(int lane){
 		Debug.Log ("On lane : " + lane);
-		if (!lockedAudioTracks [currentLane])
+		if (!lockedAudioTracks [currentLane]) {
 			audioSources [currentLane].volume = 0;
+		}
 		currentLane = lane;
 		audioSources [lane].volume = 100;
 	}

@@ -25,4 +25,5 @@ public class CameraScript : MonoBehaviour {
 		positionMovingTo = position;
 		moving = true;
 	}
+
 }
