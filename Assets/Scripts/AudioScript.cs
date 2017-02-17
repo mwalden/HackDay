@@ -13,6 +13,8 @@ public class AudioScript : MonoBehaviour {
 	public int currentLane;
 	public float lockDownDuration;
 
+	public int level;
+
 	private int successAudioLevel;
 
 
@@ -33,7 +35,7 @@ public class AudioScript : MonoBehaviour {
 		for (int x = 0; x < totalLanes; x++) {
 			AudioSource audioSource = gameObject.AddComponent<AudioSource> ();
 			audioSources.Add (audioSource);
-			string path = rootAudioDirectory + "/S/" + (x + 1);
+			string path = rootAudioDirectory + "/"+level+"/" + (x + 1);
 			AudioClip clip = Resources.Load<AudioClip> (path);
 			audioSource.clip = clip;
 			audioSource.volume = 0;
