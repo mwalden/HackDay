@@ -29,7 +29,6 @@ public class AudioScript : MonoBehaviour {
 		float deltaTime = Time.deltaTime;
 		for (int x = 0; x < totalLanes; x++) {
 			if (lockedAudioTracks [x]) {
-				Debug.Log ("Locked audio : " +lockedAudioTracksDuration [x]);
 				lockedAudioTracksDuration [x] -= deltaTime;
 				if (lockedAudioTracksDuration [x] <= 0) {
 					lockedAudioTracksDuration [x] = 0;

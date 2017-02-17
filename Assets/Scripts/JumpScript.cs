@@ -28,8 +28,9 @@ public class JumpScript : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter2D(Collision2D  other) {		
-		ps.SetCurrentPlatform (other.gameObject);
+	void OnCollisionEnter2D(Collision2D  other) {
+		if (other.gameObject.tag == "platform")
+			ps.SetCurrentPlatform (other.gameObject);
 	}
 
 
