@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour {
 	private PlayerScript playerScript;
 	private AudioScript audioScript;
 
+	public int totalLanes;
 	public float distanceToMove;
 	public float speed;
 	public int laneId;
@@ -34,6 +35,8 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void onLeftClick(){
+		if (laneId == 0)
+			return;
 		Vector3 cameraDestination = new Vector3 (cam.transform.position.x - distanceToMove, cam.transform.position.y, cam.transform.position.z);
 		Vector3 playerDestination = new Vector3 (player.transform.position.x - distanceToMove, player.transform.position.y, player.transform.position.z);
 
@@ -46,6 +49,8 @@ public class GameController : MonoBehaviour {
 
 
 	public void onRightClick(){
+		if (laneId == totalLanes -1)
+			return;
 		Vector3 cameraDestination = new Vector3 (cam.transform.position.x + distanceToMove, cam.transform.position.y, cam.transform.position.z);
 		Vector3 playerDestination = new Vector3 (player.transform.position.x + distanceToMove, player.transform.position.y, player.transform.position.z);
 		playerScript.setKinematic (true);
