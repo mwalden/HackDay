@@ -6,12 +6,24 @@ public class AudioScript : MonoBehaviour {
 	Dictionary<int,bool> lockedAudioTracks = new Dictionary<int,bool> ();
 	Dictionary<int,float> lockedAudioTracksDuration = new Dictionary<int,float> ();
 	List<AudioSource> audioSources = new List<AudioSource>();
+	List<AudioSource> successAudio = new List<AudioSource>();
 	public string rootAudioDirectory;
 	public int totalLanes;
 	public int currentLane;
 	public float lockDownDuration;
 
+	private int successAudioLevel;
+
+
 	void Awake(){
+		for (int i = 0; i < 4; i++) {
+			AudioSource audioSource = gameObject.AddComponent<AudioSource> ();
+			successAudio.Add (audioSource);
+			string path = "Sounds/Success - " + (i + 1);
+			AudioClip clip = Resources.Load<AudioClip> (path);
+			audioSource.clip = clip;
+		}
+
 		for (int x = 0; x < totalLanes; x++) {
 			AudioSource audioSource = gameObject.AddComponent<AudioSource> ();
 			audioSources.Add (audioSource);
@@ -38,6 +50,14 @@ public class AudioScript : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	public void setSuccessLevel(int level){
+		successAudioLevel = level;
+		if (level != 0) {
+			successAudio [level - 1].Play ();
+		}
+			
 	}
 
 	public void setCurrentLane(int lane){

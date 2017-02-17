@@ -65,8 +65,8 @@ public class GameController : MonoBehaviour {
 		cameraScript.moveCameraToPosition (cameraDestination);
 		laneId -= 1;
 		audioScript.setCurrentLane (laneId);
+		audioScript.setSuccessLevel (0);
 	}
-
 
 	public void onRightClick(){
 		if (laneId == totalLanes -1)
@@ -79,11 +79,12 @@ public class GameController : MonoBehaviour {
 		cameraScript.moveCameraToPosition (cameraDestination);
 		laneId += 1;
 		audioScript.setCurrentLane (laneId);
+		audioScript.setSuccessLevel (0);
 	}
 
 	public void addPlatformPassed(int value){
 		platformsPassed += value;
-
+		audioScript.setSuccessLevel (platformsPassed);
 		if (platformsPassed == lockDownTotal) {
 			audioScript.lockDownLane (laneId);
 			platformsPassed = 0;

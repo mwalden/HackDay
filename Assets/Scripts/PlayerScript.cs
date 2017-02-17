@@ -10,6 +10,7 @@ public class PlayerScript : MonoBehaviour {
 	private ScoreScript scoreScript;
 	private Vector3 positionMovingTo;
 	private bool moving;
+	private bool justMoved=false;
 
 
 	void Start(){
@@ -29,9 +30,17 @@ public class PlayerScript : MonoBehaviour {
 
 	public void SetCurrentPlatform(GameObject platform){
 		if (currentPlatform != platform) {
+			if (justMoved) {
+				justMoved = false;
+				return;
+			}
+				
 			if (currentPlatform != null) {
 				scoreScript.setScore (100);
-				gameController.addPlatformPassed (1);
+				Debug.Log ("setting platform passed");
+				if (!moving) {
+					gameController.addPlatformPassed (1);
+				}
 			}
 			Debug.Log ("setting platform");
 			currentPlatform = platform;
@@ -47,8 +56,10 @@ public class PlayerScript : MonoBehaviour {
 			float step = cameraScript.speed * Time.deltaTime;
 			transform.position = Vector3.MoveTowards (transform.position, positionMovingTo, step);
 			moving = transform.position != positionMovingTo;
-			if (!moving)
+			if (!moving) {
+				Debug.Log ("No longer moving");
 				playerRigidbody.isKinematic = false;
+			}
 		}
 	}
 
@@ -59,5 +70,6 @@ public class PlayerScript : MonoBehaviour {
 	public void moveToPosition(Vector3 position){
 		positionMovingTo = position;
 		moving = true;
+		justMoved = true;
 	}
 }
